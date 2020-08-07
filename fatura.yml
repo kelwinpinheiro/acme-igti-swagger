@@ -1,0 +1,149 @@
+swagger: '2.0'
+info:
+  description: Lista de serviços da empresa AP para integração
+  version: Versão API 1.0
+  title: Acme Producer - Fatura
+  termsOfService: Termos de uso
+  contact:
+    name: teste@hotmail.com
+  license:
+    name: API License
+host: 'localhost:8080'
+basePath: /
+tags:
+
+
+  - name: fatura-controller
+    description: Fatura Controller
+paths:
+  
+  /v1/faturas:
+    get:
+      tags:
+        - fatura-controller
+      summary: Mostra a lista de faturas
+      operationId: getAllFaturasUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Fatura'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    post:
+      tags:
+        - fatura-controller
+      summary: Gerar uma nova fatura
+      operationId: gerarFaturaUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: fatura
+          description: fatura
+          required: true
+          schema:
+            $ref: '#/definitions/Fatura'
+      responses:
+        '201':
+          description: Created
+          schema:
+            type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/v1/faturas/cpf/{cpf}':
+    get:
+      tags:
+        - fatura-controller
+      summary: Consulta as faturas pelo CPF do cliente
+      operationId: getFaturasPorCPFUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: cpf
+          in: path
+          description: cpf
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Fatura'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/v1/faturas/{codigo}':
+    get:
+      tags:
+        - fatura-controller
+      summary: Consulta uma fatura pelo código
+      operationId: getFaturaUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: codigo
+          in: path
+          description: codigo
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Fatura'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  
+definitions:
+  
+  Fatura:
+    type: object
+    properties:
+      codigo:
+        type: string
+      dataLeitura:
+        type: string
+        format: date-time
+      dataVencimento:
+        type: string
+        format: date-time
+      id:
+        type: integer
+        format: int64
+      instalacao:
+        type: integer
+      numeroLeitura:
+        type: integer
+        format: int32
+      valorConta:
+        type: number
+        format: double
+    title: Fatura
