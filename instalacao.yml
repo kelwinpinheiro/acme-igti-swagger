@@ -1,0 +1,157 @@
+swagger: '2.0'
+info:
+  description: Lista de serviços da empresa AP para integração
+  version: Versão API 1.0
+  title: Acme Producer - Instalação
+  termsOfService: Termos de uso
+  contact:
+    name: teste@hotmail.com
+  license:
+    name: API License
+host: 'localhost:8080'
+basePath: /
+tags:
+  - name: instalacao-controller
+    description: Instalacao Controller
+paths:
+  /v1/instalacoes:
+    get:
+      tags:
+        - instalacao-controller
+      summary: Mostra a lista de instalações
+      operationId: getAllInstalacoesUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Instalacao'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    post:
+      tags:
+        - instalacao-controller
+      summary: Cadastrar uma nova instalação
+      operationId: cadastrarInstalacaoUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: instalacao
+          description: instalacao
+          required: true
+          schema:
+            $ref: '#/definitions/Instalacao'
+      responses:
+        '201':
+          description: Created
+          schema:
+            type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/v1/instalacoes/cpf/{cpf}':
+    get:
+      tags:
+        - instalacao-controller
+      summary: Consulta uma instalação pelo CPF
+      operationId: getInstalacaoPorCPFUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: cpf
+          in: path
+          description: cpf
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Instalacao'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/v1/instalacoes/{codigo}':
+    get:
+      tags:
+        - instalacao-controller
+      summary: Consulta uma instalação pelo código
+      operationId: getInstalacaoUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: codigo
+          in: path
+          description: codigo
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Instalacao'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+definitions:
+  Endereco:
+    type: object
+    properties:
+      bairro:
+        type: string
+      cidade:
+        type: string
+      logradouro:
+        type: string
+      numero:
+        type: integer
+        format: int64
+      uf:
+        type: string
+    title: Endereco
+  Instalacao:
+    type: object
+    properties:
+      cliente:
+        type : integer
+      codigo:
+        type: string
+      dataInstalacao:
+        type: string
+        format: date-time
+      enderecoInstalacao:
+        $ref: '#/definitions/Endereco'
+      id:
+        type: integer
+        format: int64
+      listaFatura:
+        type: array
+        items:
+          type: integer
+    title: Instalacao
+  
