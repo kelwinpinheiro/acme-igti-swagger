@@ -1,0 +1,131 @@
+swagger: '2.0'
+info:
+  description: Lista de serviços da empresa AP para integração
+  version: Versão API 1.0
+  title: Acme Producer - Cliente
+  termsOfService: Termos de uso
+  contact:
+    name: teste@hotmail.com
+  license:
+    name: API License
+host: 'localhost:8080'
+basePath: /
+tags:
+  - name: cliente-controller
+    description: Cliente Controller
+paths:
+  
+  /v1/clientes:
+    get:
+      tags:
+        - cliente-controller
+      summary: Exibe a lista de clientes
+      operationId: getAllClientesUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Cliente'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    post:
+      tags:
+        - cliente-controller
+      summary: Cadastrar um novo cliente
+      operationId: criarClienteUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: cliente
+          description: cliente
+          required: true
+          schema:
+            $ref: '#/definitions/Cliente'
+      responses:
+        '201':
+          description: Created
+          schema:
+            type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/v1/clientes/{cpf}':
+    get:
+      tags:
+        - cliente-controller
+      summary: Consulta um cliente pelo CPF
+      operationId: getClienteByCpfUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: cpf
+          in: path
+          description: cpf
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Cliente'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+definitions:
+  Cliente:
+    type: object
+    properties:
+      cpf:
+        type: string
+      dataNascimento:
+        type: string
+        format: date-time
+      endereco:
+        $ref: '#/definitions/Endereco'
+      enderecoCobranca:
+        $ref: '#/definitions/Endereco'
+      id:
+        type: integer
+        format: int64
+      listaInstalacao:
+        type: array
+        items:
+          type: integer
+      nome:
+        type: string
+    title: Cliente
+  Endereco:
+    type: object
+    properties:
+      bairro:
+        type: string
+      cidade:
+        type: string
+      logradouro:
+        type: string
+      numero:
+        type: integer
+        format: int64
+      uf:
+        type: string
+    title: Endereco
