@@ -1,11 +1,11 @@
 swagger: '2.0'
 info:
-  description: Lista de serviços da empresa AP para integração
+  description: Microserviço de instalação
   version: Versão API 1.0
   title: Acme Producer - Instalação
   termsOfService: Termos de uso
   contact:
-    name: teste@hotmail.com
+    name: suporte@acme.com.br
   license:
     name: API License
 host: 'localhost:8080'

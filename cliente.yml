@@ -1,14 +1,14 @@
 swagger: '2.0'
 info:
-  description: Lista de serviços da empresa AP para integração
+  description: Microserviço de cliente
   version: Versão API 1.0
   title: Acme Producer - Cliente
   termsOfService: Termos de uso
   contact:
-    name: teste@hotmail.com
+    name: suporte@acme.com.br
   license:
     name: API License
-host: 'localhost:8080'
+host: 'localhost:8081'
 basePath: /
 tags:
   - name: cliente-controller
